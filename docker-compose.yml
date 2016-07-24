@@ -1,0 +1,25 @@
+app:
+  image: debian:jessie
+  volumes:
+    - ./www:/usr/share/php/html
+  tty: true
+php:
+  image: nakaji-dayo/php:7.0-cli
+#  expose:
+#    - "9080"
+  ports:
+    - "9080:80"
+  volumes_from:
+    - app
+  working_dir: /usr/share/php/html/blog
+  links:
+    - mysql
+  command: php artisan serve --host 0.0.0.0 --port=80
+mysql:
+  image: mysql:5.7
+  environment:
+    MYSQL_ROOT_PASSWORD: passwd
+  volumes_from:
+    - app
+  volumes:
+    - ./mysql/conf.d:/etc/mysql/conf.d
