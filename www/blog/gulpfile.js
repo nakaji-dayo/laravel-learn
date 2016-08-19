@@ -11,6 +11,10 @@ var elixir = require('laravel-elixir');
  |
  */
 
+elixir.config.js.browserify.transformers[0].options.stage = 0
+
 elixir(function(mix) {
-    mix.sass('app.scss');
+  mix.sass('app.scss')
+//    .browserify('main.js')
+    .babel('main.js');
 });
